@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "name": "iPhone 14",
+        "description": "Descrizione del prodotto 1",
+        "price": 10.99,
+        "image": "./resources/images/iphone-14.png"
+    },
+    {
+        "id": 2,
+        "name": "iPhone 3G",
+        "description": "Descrizione del prodotto 2",
+        "price": 15.99,
+        "image": "./resources/images/iphone-3g.jpg"
+    }
+]
