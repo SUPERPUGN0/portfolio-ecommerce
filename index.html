@@ -12,9 +12,10 @@
 <body>
     <header>
         <nav>
+            <button id="prova">Prova</button>
             <ul>
                 <li>Prodotti</li>
-                <li>Carrello</li>
+                <li>Carrello <button class="cartButton">Cart</button></li>
                 <li>Checkout</li>
             </ul>
         </nav>
@@ -26,8 +27,17 @@
     </header>
     <main>
         <section id="productsContainer"></section>
-        <section id="miniCart">
+        <section id="onPageCart">
             <h2>Cart</h2>
+            <p id="cartItemsCounter">10 oggetti nel carrello</p>
+            <p id="cartTotalAmount">Spesa totale 1000€</p>
+            <button class="closeCartButton">Close Cart</button>
+            <button class="clearCartButton">Clear Cart</button>
+            <div class="cartItem">
+                <img src="./resources/images/iphone-3g.jpg" alt="">
+                <p>iPhone 3g</p>
+                <p>price 100€</p>
+            </div>
         </section>
     </main>
     <footer>

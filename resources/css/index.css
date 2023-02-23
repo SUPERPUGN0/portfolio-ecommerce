@@ -2,6 +2,11 @@
     width: 100px;
 }
 
-.cartElement img {
+.cartItem img {
     width: 100px;
+}
+
+#productsContainer {
+    display: flex;
+    flex-wrap: wrap;
 }

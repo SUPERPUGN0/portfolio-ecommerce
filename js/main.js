@@ -1,76 +1,99 @@
-// Select the HTML element where the products will be inserted.
+// Variables
+
+const cartButton = document.querySelector('.cartButton');
+const closeCartButton = document.querySelector('.closeToCartButton');
+const clearCartButton = document.querySelector('.clearToCartButton');
+const onPageCart = document.querySelector('.onPageCart');
+const cartItemsCounter = document.getElementById('cartItemsCounter');
+const cartTotalAmount = document.getElementById('cartTotalAmount');
+const singleCartItem = document.querySelector('.cartItem ');
 const productsContainer = document.getElementById('productsContainer');
 
-// Select the HTML element where the mini cart's products will be inserted.
-const miniCart = document.getElementById('miniCart');
+// Array that contains all cart items
+let cart = [];
+// buttons
+// let buttonsDOM = [];
 
-// Retrieve the product data from the JSON file
-fetch('products.json')
-    .then(response => response.json())
-    .then(products => {
+// Import products
+class Products {
+    async getProducts() {
+        try {
+            let result = await fetch(' products.json');
+            let products = await result.json();
+            return products;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
 
-        // Create an HTML element for each product and add it to the container element.
-        products.forEach(product => {
-
-            // Create a product container to put in image and other properties
-            const productElement = document.createElement('div');
-            productElement.className = 'product';
-
-            // Create product name element
-            const productName = document.createElement('h3');
-            productName.innerText = product.name;
-            productElement.appendChild(productName);
-
-            // Create product quantity element
-            const productQuantity = document.createElement('p');
-            productQuantity.innerText = `Quantity: ${product.quantity}`;
-            productElement.appendChild(productQuantity);
-
-            // Create product's image element
-            const productImage = document.createElement('img');
-            productImage.src = product.image;
-            productElement.appendChild(productImage);
-
-            // Create product addToCart button
-            const addToCartButton = document.createElement('button');
-            addToCartButton.innerText = 'add to cart';
-            addToCartButton.setAttribute('data-id', product.id);
-            productElement.appendChild(addToCartButton);
-
-            // Create removeFromCart button
-            const removeFromCartButton = document.createElement('button');
-            removeFromCartButton.innerText = 'remove from cart';
-
-            // Create cart element
-            const cartElement = document.createElement('div');
-            cartElement.className = 'cartElement';
-            const cartElementImg = document.createElement('img');
-            cartElementImg.src = product.image;
-            cartElement.appendChild(cartElementImg);
-
-
-            // Create addToCartButton listener
-            addToCartButton.addEventListener('click', function () {
-
-                // Add product to mini cart HTML container
-                miniCart.appendChild(cartElement)
-
-                // Append removeFromCart button
-                cartElement.appendChild(removeFromCartButton);
-
-                function reduceQuantity(event) {
-                    // work in progress
-                    event.target.dataset.id
-                }
-            });
-
-            // Create removeFromCart listener
-            removeFromCartButton.addEventListener('click', function () {
-                miniCart.removeChild(cartElement);
-            })
-
-            // Add product to HTML container
-            productsContainer.appendChild(productElement);
-
+// Display products
+class UI {
+    displayProducts(products) {
+        let result = '';
+        products.forEach(singleProduct => {
+            result += `
+            <div class="product">
+                <img src=${singleProduct.image} alt="">
+                <p>${singleProduct.name}</p>
+                <p>Price € ${singleProduct.price}</p>
+                <button class="addToCartButton" data-id=${singleProduct.id}>Add me pls</button>
+            </div>
+            `
         });
-    });
+        productsContainer.innerHTML = result;
+    }
+    getAddToCartButtons() {
+        const addToCartButtons = [...document.querySelectorAll('.addToCartButton')];
+        //buttonsDOM = addToCartButtons;
+        addToCartButtons.forEach(button => {
+            let id = button.dataset.id;
+            let itemInCart = cart.find(cartItem => cartItem.id === id);
+            if (itemInCart) {
+                button.innerText = 'Good choise!';
+                button.disabled = true;
+            }
+            button.addEventListener('click', (event) => {
+                event.target.innerText = 'Good choise!';
+                event.target.disabled = true;
+                // get product from local storage
+                let cartItem = { ...Storage.getProduct(id), quantity: 1 };
+                // add product to the cart
+                cart = [...cart, cartItem];
+                // save cart in local storage
+                Storage.saveCart(cart);
+                // set cart values
+
+                // display cart item
+            })
+        });
+    };
+};
+
+// Local storage
+class Storage {
+    static saveProducts(products) {
+        localStorage.setItem('products', JSON.stringify(products));
+    }
+    static getProduct(id) {
+        let products = JSON.parse(localStorage.getItem('products'));
+        return products.find(product => product.id === id);
+    }
+    static saveCart(cart) {
+        localStorage.setItem('cart', JSON.stringify(cart))
+    };
+};
+
+// When content are loaded, put it in on the HTML
+document.addEventListener('DOMContentLoaded', () => {
+    const ui = new UI();
+    const products = new Products();
+
+    // Import products from JSON
+    products.getProducts().then(products => {
+        ui.displayProducts(products);
+        Storage.saveProducts(products);
+    }).then(() => {
+        ui.getAddToCartButtons();
+    })
+});

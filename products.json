@@ -1,18 +1,50 @@
 [
     {
         "id": 1,
-        "name": "iPhone 14",
-        "description": "Descrizione del prodotto 1",
-        "price": 10.99,
-        "image": "./resources/images/iphone-14.png",
-        "quantity": 10
+        "name": "iPhone 3G",
+        "price": 199.99,
+        "image": "./resources/images/iphone-3g.jpg"
     },
     {
         "id": 2,
+        "name": "HTC Desire",
+        "price": 149.99,
+        "image": "./resources/images/iphone-3g.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Nokia N8",
+        "price": 249.99,
+        "image": "./resources/images/iphone-3g.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Samsung Galaxy S",
+        "price": 399.99,
+        "image": "./resources/images/iphone-3g.jpg"
+    },
+    {
+        "id": 5,
+        "name": "iPhone 4S",
+        "price": 299.99,
+        "image": "./resources/images/iphone-3g.jpg"
+    },
+    {
+        "id": 6,
+        "name": "Nexus 4",
+        "price": 199.99,
+        "image": "./resources/images/iphone-3g.jpg"
+    },
+    {
+        "id": 7,
+        "name": "iPhone 14",
+        "price": 10.99,
+        "image": "./resources/images/iphone-3g.jpg"
+    },
+    {
+        "id": 8,
         "name": "iPhone 3G",
-        "description": "Descrizione del prodotto 2",
         "price": 15.99,
-        "image": "./resources/images/iphone-3g.jpg",
-        "quantity": 10
+        "image": "./resources/images/iphone-3g.jpg"
     }
 ]
