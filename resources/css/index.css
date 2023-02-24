@@ -1,12 +1,8 @@
-.product img {
-    width: 100px;
+.product-image {
+    width: 150px;
 }
 
-.cartItem img {
-    width: 100px;
-}
-
-#productsContainer {
-    display: flex;
-    flex-wrap: wrap;
+html {
+    background-color: black;
+    color: white;
 }

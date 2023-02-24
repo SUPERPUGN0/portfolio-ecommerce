@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "name": "pizza",
+        "price": 20,
+        "image": "../resources/images/pizza.jpg",
+        "cartQuantity": 0
+    },
+    {
+        "id": 2,
+        "name": "pasta",
+        "price": 15,
+        "image": "../resources/images/pasta.jpeg",
+        "cartQuantity": 0
+    }
+]
