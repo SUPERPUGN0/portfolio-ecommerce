@@ -5,83 +5,184 @@ const cartContainer = document.getElementById('cart');
 // Load localStorage cart
 let cart = JSON.parse(localStorage.getItem('cart'));
 
-// *********************** //
-// FUNCTIONS               //
-// *********************** //
+if (!cart) {
 
-// Load cart from localStorage
-const loadCart = () => {
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    return cart;
-}
-
-// Save cart to localStorageproviding cart array
-const saveCart = cart => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-// Find product providing products array and target. Target must have id property. Returns product obj.
-const findProduct = (array, event) => {
-    const productId = event.target.id;
-    const product = array.find(prod => prod.id === productId);
-    return product;
-}
-
-// Find product index providing products array and target. Target must have id property. Returns product index.
-const findProductIndex = (array, event) => {
-    const productId = event.target.id;
-    let index = array.findIndex(search => search.id === productId);
-    return index;
-}
+    // If cart not empty, define cart
+    cart = [];
+};
 
 // *********************** //
 // CLASSES                 //
 // *********************** //
 
-// Create a "decrease quantity" button for cart items and add it to the cart
-class DecreaseBtn {
+// Create and display Cart item
+class Product {
 
-    constructor(productId) {
+    constructor(product) {
 
-        this.htmlBtn = document.createElement('button');
-        this.htmlBtn.innerText = 'Decrease quantity';
-        this.htmlClass = this.htmlBtn.classList.add('decrease-quantity');
-        this.id = productId;
+        // Assign product ID
+        this.id = product.id;
+
+        // Cart Quantity
+        this.quantityValue = 0;
+
+        /*
+        // Load quantity from localStorage
+        loadQuantity () {
+            const index = cart.findIndex(search => search.id === this.id);
+            this.quantityValue = cart[index].quantity;
+        };*/
+
+        // Product item container
+        this.productDiv = document.createElement('div');
+        this.productDiv.classList.add('product-container');
+
+        // Image
+        this.image = document.createElement('img');
+        this.image.src = product.image;
+        this.image.classList.add('product-image');
+        this.productDiv.appendChild(this.image);
+
+        // Name
+        this.name = document.createElement('p');
+        this.name.innerText = product.name;
+        this.name.classList.add('product-name');
+        this.productDiv.appendChild(this.name);
+
+        // Price
+        this.price = document.createElement('p');
+        this.price.innerText = product.price;
+        this.price.classList.add('product-price');
+        this.productDiv.appendChild(this.price);
+
+        // "Add to cart" button
+        this.addToCartBtn = document.createElement('button');
+        this.addToCartBtn.innerText = 'Add to cart';
+        this.addToCartBtnClass = this.addToCartBtn.classList.add('addToCart-btn');
+        this.productDiv.appendChild(this.addToCartBtn);
+    };
+
+    newCartItem() {
+
+        // Create Cart item container
+        this.cartDiv = document.createElement('div');
+        this.cartDiv.classList.add('cart-item-container');
+
+        // Image
+        this.cartItemImage = document.createElement('img');
+        this.cartItemImage.src = this.image.src;
+        this.cartItemImage.classList.add('cart-item-image');
+        this.cartDiv.appendChild(this.cartItemImage);
+
+        // Name
+        this.cartItemName = document.createElement('p');
+        this.cartItemName.innerText = this.name.innerText;
+        this.cartItemName.classList.add('cart-item-name');
+        this.cartDiv.appendChild(this.cartItemName);
+
+        // Price
+        this.cartItemPrice = document.createElement('p');
+        this.cartItemPrice.innerText = this.price.innerText;
+        this.cartItemPrice.classList.add('carti-item-price');
+        this.cartDiv.appendChild(this.cartItemPrice);
+
+        // Display Quantity
+        this.quantity = document.createElement('p');
+        this.quantity.innerText = `Quantity ${this.quantityValue}`;
+        this.cartDiv.appendChild(this.quantity);
+
+        // Display Increase quantity Button
+        this.increaseBtn = document.createElement('button');
+        this.increaseBtn.innerText = 'Increase quantity';
+        this.increaseBtnClass = this.increaseBtn.classList.add('increase-quantity');
+        this.cartDiv.appendChild(this.increaseBtn);
+
+        // Display Decrease quantity Button
+        this.decreaseBtn = document.createElement('button');
+        this.decreaseBtn.innerText = 'Decrease quantity';
+        this.decreaseBtnClass = this.decreaseBtn.classList.add('decrease-quantity');
+        this.cartDiv.appendChild(this.decreaseBtn);
+
+        // Add elements to DOM
+        cartContainer.appendChild(this.cartDiv);
+
+        // Add "increase quantity button" Listener
+        this.increaseBtn.addEventListener('click', () => {
+
+            // Increase quantity and update localStorage
+
+            this.quantityValue++;
+            const index = cart.findIndex(search => search.id === this.id);
+            this.quantityValue = cart[index].quantity;
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Update HTML
+            this.quantity.innerText = `Quantity ${this.quantityValue}`;
+        })
+
+        // Add "decrease quantity button" Listener
+        this.decreaseBtn.addEventListener('click', () => {
+
+            // Decrease quantity and update localeStorage
+            if (this.quantityValue > 0) {
+
+                this.quantityValue--;
+                const index = cart.findIndex(search => search.id === this.id);
+                this.quantityValue = cart[index].quantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // Update HTML
+                this.quantity.innerText = `Quantity ${this.quantityValue}`;
+            };
+
+        });
+    };
+
+    checkCart() {
+        if (cart.some(prod => prod.id === this.id)) {
+
+            // Recover cart item and quantity from localStorage 
+            const index = cart.findIndex(search => search.id === this.id);
+            this.quantityValue = cart[index].quantity;
+            this.newCartItem();
+        };
     };
 
     init() {
 
-        // Add button to DOM
-        cartContainer.appendChild(this.htmlBtn);
-    };
+        // Add elements to DOM
+        productsContainer.appendChild(this.productDiv);
 
-    decrease() {
+        // Add To Cart Listener
+        this.addToCartBtn.addEventListener('click', () => {
 
-        // Decrease quantity
-        let index = cart.findIndex(search => search.id === this.id);
-        cart[index].cartQuantity--;
+            // Add item to the cart or increase quantity
+            if (cart.some(prod => prod.id === this.id)) {
 
-        // Display updated quantity
-        let quantity = document.getElementById(`q${this.id}`);
-        quantity.innerText = `Quantity ${cart[index].cartQuantity}`;
-    };
+                this.quantityValue++;
+                const index = cart.findIndex(search => search.id === this.id);
+                this.quantityValue = cart[index].quantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
 
-    save() {
+            } else {
 
-        // Update localStorage cart
-        localStorage.setItem('cart', JSON.stringify(cart));
+                this.quantityValue++;
+                cart.push({ id: this.id, quantity: this.quantityValue });
+                this.newCartItem();
+                localStorage.setItem('cart', JSON.stringify(cart));
+            };
+        })
     };
 };
 
 
-
-
-// *********************** //
-// JSON PRODUCTS           //
-// *********************** //
+// ************************* //
+// DISPLAY PRODUCTS AND CART //
+// ************************* //
 
 // Import JSON products
 fetch('/js/products.json')
+
     .then(response => {
 
         // Covert json to js objects
@@ -92,159 +193,18 @@ fetch('/js/products.json')
         // Assign Json products to array
         let products = json;
 
-        // Add products to DOM
-        let appendProducts = '';
+        // *******************//
+        // DISPLAY PRODUCTS   //
+        // *******************//
 
         products.forEach(product => {
-            appendProducts += `<div>
-                                <img src="${product.image}" class="product-image">
-                                <button class="addToCartButton" data-id="${product.id}">Add to cart</button>
-                                </div>`;
 
-        });
-
-        // Add elements to DOM
-        productsContainer.innerHTML = appendProducts;
-
-        // *********************** //
-        // DISPLAY OLD CART        //
-        // *********************** //
-
-        // If cart not empty, display cart items
-        if (cart) {
-            cart.forEach(product => {
-
-                // Create cart item div
-                const cartItem = document.createElement('div');
-                cartItem.classList.add('cart-item');
-                cartContainer.appendChild(cartItem);
-
-                // Display cart item image
-                const imageElement = document.createElement('img');
-                imageElement.src = product.image;
-                cartItem.classList.add('cart-item-image');
-                cartItem.appendChild(imageElement);
-
-                // Display cart item quantity
-                let quantity = document.createElement('p')
-                quantity.innerText = `Quantity ${product.cartQuantity}`;
-                quantity.classList.add('quantity');
-                quantity.id = `q${product.id}`;
-                cartItem.appendChild(quantity);
-
-                // Display decrease quantity button
-                const decreaseBtn = new DecreaseBtn(product.id);
-                decreaseBtn.init();
-
-                // Create listener
-                decreaseBtn.htmlBtn.addEventListener('click', () => {
-
-                    // Decrease quantity
-                    decreaseBtn.decrease();
-
-                    // Save to localStorage
-                    decreaseBtn.save();
-                })
-
-            });
-        };
-
-        // ****************************************** //
-        // ADD TO CART BTN & INCREASE QUANTITY BTN    //
-        // ****************************************** //
-
-        // Assign addToCartButtons to an array
-        let addToCartButtons = [...document.querySelectorAll('.addToCartButton')];
-
-        // Add addEventListner to each button
-        addToCartButtons.forEach(button => {
-
-            button.addEventListener('click', (event) => {
-
-                // Button id is equal to the product id
-                const idToFind = +event.target.dataset.id;
-
-                // Find product to add to cart
-                const product = products.find(prod => prod.id === idToFind);
-
-                // If cart not exist in localStorage, add product to cart
-                if (!cart) {
-
-                    // Add cart item div
-                    const cartItem = document.createElement('div');
-                    cartItem.classList.add('cart-item');
-                    cartContainer.appendChild(cartItem);
-
-                    // Add cart item image
-                    const imageElement = document.createElement('img');
-                    imageElement.src = product.image;
-                    cartItem.classList.add('cart-item-image');
-                    cartItem.appendChild(imageElement);
-
-                    // Add cart item quantity
-                    let quantity = document.createElement('p')
-                    quantity.innerText = `Quantity ${product.cartQuantity = 1}`
-                    quantity.classList.add('quantity');
-                    quantity.id = `q${product.id}`;
-                    cartItem.appendChild(quantity);
-
-                    // Add decrease quantity button
-                    let decreaseQuantityButton = document.createElement('button');
-                    decreaseQuantityButton.innerText = 'Decrease quantity'
-                    cartItem.appendChild(decreaseQuantityButton);
-
-                    // Set cart and save to localStorage
-                    cart = [product]
-                    localStorage.setItem('cart', JSON.stringify(cart));
-
-                } else {
-
-                    // If product already exist in cart, increase quantity
-                    if (cart.some(search => search.id === product.id)) {
-
-                        // Find item in cart
-                        let index = cart.findIndex(search => search.id === product.id);
-
-                        // Update quantity
-                        cart[index].cartQuantity++;
-                        let quantity = document.getElementById(`q${product.id}`);
-                        quantity.innerText = `Quantity ${cart[index].cartQuantity}`;
-
-                        // Save new cart in localStorage
-                        localStorage.setItem('cart', JSON.stringify(cart));
-
-                    } else /* Cart not empty but item not found */ {
-
-                        // Add cart item div
-                        const cartItem = document.createElement('div');
-                        cartItem.classList.add('cart-item');
-                        cartContainer.appendChild(cartItem);
-
-                        // Add cart item image
-                        const imageElement = document.createElement('img');
-                        imageElement.src = product.image;
-                        cartItem.classList.add('cart-item-image');
-                        cartItem.appendChild(imageElement);
-
-                        // Add cart item quantity
-                        const quantity = document.createElement('p')
-                        quantity.innerText = `Quantity ${product.cartQuantity = 1}`;
-                        quantity.classList.add('quantity');
-                        quantity.id = `q${product.id}`;
-                        cartItem.appendChild(quantity);
-
-                        // Add product to cart array and save to localStorage
-                        cart.push(product);
-                        localStorage.setItem('cart', JSON.stringify(cart));
-
-                    }
-                }
-            })
+            const productItem = new Product(product);
+            productItem.checkCart();
+            productItem.init();
         });
     })
-    .catch(error => {
-        console.error('Error during json import:', error);
-    });
+    .catch(error => { console.error('Error during json import:', error); });
 
 
 
