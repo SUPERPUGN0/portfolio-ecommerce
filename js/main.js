@@ -2,26 +2,86 @@
 const productsContainer = document.getElementById('products');
 const cartContainer = document.getElementById('cart');
 
-// Local storage cart
+// Load localStorage cart
 let cart = JSON.parse(localStorage.getItem('cart'));
 
 // *********************** //
 // FUNCTIONS               //
 // *********************** //
 
-// Decrease cart single item quantity
-function decreaseQuantity(product) {
-    product.cartQuantity--;
-    let quantity = document.getElementById('quantity')
-    quantity.innerText = `Quantity ${product.cartQuantity}`
+// Load cart from localStorage
+const loadCart = () => {
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    return cart;
 }
+
+// Save cart to localStorageproviding cart array
+const saveCart = cart => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Find product providing products array and target. Target must have id property. Returns product obj.
+const findProduct = (array, event) => {
+    const productId = event.target.id;
+    const product = array.find(prod => prod.id === productId);
+    return product;
+}
+
+// Find product index providing products array and target. Target must have id property. Returns product index.
+const findProductIndex = (array, event) => {
+    const productId = event.target.id;
+    let index = array.findIndex(search => search.id === productId);
+    return index;
+}
+
+// *********************** //
+// CLASSES                 //
+// *********************** //
+
+// Create a "decrease quantity" button for cart items and add it to the cart
+class DecreaseBtn {
+
+    constructor(productId) {
+
+        this.htmlBtn = document.createElement('button');
+        this.htmlBtn.innerText = 'Decrease quantity';
+        this.htmlClass = this.htmlBtn.classList.add('decrease-quantity');
+        this.id = productId;
+    };
+
+    init() {
+
+        // Add button to DOM
+        cartContainer.appendChild(this.htmlBtn);
+    };
+
+    decrease() {
+
+        // Decrease quantity
+        let index = cart.findIndex(search => search.id === this.id);
+        cart[index].cartQuantity--;
+
+        // Display updated quantity
+        let quantity = document.getElementById(`q${this.id}`);
+        quantity.innerText = `Quantity ${cart[index].cartQuantity}`;
+    };
+
+    save() {
+
+        // Update localStorage cart
+        localStorage.setItem('cart', JSON.stringify(cart));
+    };
+};
+
+
+
 
 // *********************** //
 // JSON PRODUCTS           //
 // *********************** //
 
 // Import JSON products
-fetch('products.json')
+fetch('/js/products.json')
     .then(response => {
 
         // Covert json to js objects
@@ -54,59 +114,43 @@ fetch('products.json')
         if (cart) {
             cart.forEach(product => {
 
-                // Add cart item div
+                // Create cart item div
                 const cartItem = document.createElement('div');
                 cartItem.classList.add('cart-item');
                 cartContainer.appendChild(cartItem);
 
-                // Add cart item image
+                // Display cart item image
                 const imageElement = document.createElement('img');
                 imageElement.src = product.image;
                 cartItem.classList.add('cart-item-image');
                 cartItem.appendChild(imageElement);
 
-                // Add cart item quantity button
+                // Display cart item quantity
                 let quantity = document.createElement('p')
                 quantity.innerText = `Quantity ${product.cartQuantity}`;
                 quantity.classList.add('quantity');
                 quantity.id = `q${product.id}`;
                 cartItem.appendChild(quantity);
 
-                // Add decrease quantity button
-                let decreaseQuantityButton = document.createElement('button');
-                decreaseQuantityButton.classList.add('decrease-button');
-                decreaseQuantityButton.id = product.id;
-                decreaseQuantityButton.innerText = 'Decrease quantity'
-                cartItem.appendChild(decreaseQuantityButton);
+                // Display decrease quantity button
+                const decreaseBtn = new DecreaseBtn(product.id);
+                decreaseBtn.init();
+
+                // Create listener
+                decreaseBtn.htmlBtn.addEventListener('click', () => {
+
+                    // Decrease quantity
+                    decreaseBtn.decrease();
+
+                    // Save to localStorage
+                    decreaseBtn.save();
+                })
 
             });
         };
 
-        // ************************ //
-        // DECREASE QUANTITY BUTTON //
-        // ************************ //
-
-        // Assign decreaseQuantityButton to an array
-        let decreaseQuantityButtons = [...document.querySelectorAll('.decrease-button')];
-
-        // Add addEventListner to each decrease button
-        decreaseQuantityButtons.forEach(button => {
-
-            button.addEventListener('click', event => {
-
-                // Button id is equal to the product id
-                const idToFind = event.target.id;
-
-                // Find product by id
-                const product = products.find(prod => prod.id === idToFind);
-
-                decreaseQuantity(product);
-
-            });
-        });
-
         // ****************************************** //
-        // ADD TO CART & INCREASE QUANTITY BUTTON     //
+        // ADD TO CART BTN & INCREASE QUANTITY BTN    //
         // ****************************************** //
 
         // Assign addToCartButtons to an array
@@ -144,14 +188,14 @@ fetch('products.json')
                     quantity.id = `q${product.id}`;
                     cartItem.appendChild(quantity);
 
-                    // Set cart
-                    cart = [product]
-                    localStorage.setItem('cart', JSON.stringify(cart));
-
                     // Add decrease quantity button
                     let decreaseQuantityButton = document.createElement('button');
                     decreaseQuantityButton.innerText = 'Decrease quantity'
                     cartItem.appendChild(decreaseQuantityButton);
+
+                    // Set cart and save to localStorage
+                    cart = [product]
+                    localStorage.setItem('cart', JSON.stringify(cart));
 
                 } else {
 
@@ -163,7 +207,6 @@ fetch('products.json')
 
                         // Update quantity
                         cart[index].cartQuantity++;
-                        console.log(cart[index]);
                         let quantity = document.getElementById(`q${product.id}`);
                         quantity.innerText = `Quantity ${cart[index].cartQuantity}`;
 
@@ -185,12 +228,12 @@ fetch('products.json')
 
                         // Add cart item quantity
                         const quantity = document.createElement('p')
-                        quantity.innerText = `Quantity ${product.cartQuantity}`;
+                        quantity.innerText = `Quantity ${product.cartQuantity = 1}`;
                         quantity.classList.add('quantity');
                         quantity.id = `q${product.id}`;
                         cartItem.appendChild(quantity);
 
-                        // Add product to cart array
+                        // Add product to cart array and save to localStorage
                         cart.push(product);
                         localStorage.setItem('cart', JSON.stringify(cart));
 
