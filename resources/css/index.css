@@ -2,7 +2,26 @@
     width: 150px;
 }
 
+.cart-item-image {
+    width: 20%;
+}
+
 html {
     background-color: black;
     color: white;
+}
+
+#products {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#cart {
+    z-index: 1;
+    height: 100vw;
+    width: 30vw;
+    background-color: rgb(54, 54, 54);
+    position: absolute;
+    left: 100vw;
+    top: 0vw;
 }

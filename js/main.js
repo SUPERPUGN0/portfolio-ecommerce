@@ -1,8 +1,11 @@
-// HTML elements and variables
+// DOM products container
 const productsContainer = document.getElementById('products');
+
+// DOM cart container and quantity amount
 const cartContainer = document.getElementById('cart');
 const amountElement = document.getElementById('amount');
 let cartAmount = 0;
+
 
 // Load localStorage cart
 let cart = JSON.parse(localStorage.getItem('cart'));
@@ -25,7 +28,38 @@ const updateCartAmount = () => {
     localStorage.setItem('cart-amount', cartAmount);
 }
 
+/////// PRODUCTS VIEW BUTTON /////////
 
+const changeView = document.getElementById('change-view');
+let actualView = 'card';
+
+// Change view button
+changeView.addEventListener('click', () => {
+    if (actualView === 'card') {
+        productsContainer.style.flexDirection = 'column';
+        actualView = 'list';
+    } else {
+        productsContainer.style.flexDirection = 'row';
+        actualView = 'card';
+    }
+})
+
+/////// VIEW/HIDE CART /////////
+
+const cartView = document.getElementById('see-cart');
+let actualCartView = 'close';
+
+// View/hide cart
+
+cartView.addEventListener('click', () => {
+    if (actualCartView === 'close') {
+        cartContainer.style.left = '60vw';
+        actualCartView = 'open';
+    } else {
+        cartContainer.style.left = '100vw';
+        actualCartView = 'close';
+    }
+})
 
 // Create product item and cart item
 class Product {
@@ -171,15 +205,22 @@ class Product {
                 cartAmount -= this.priceAmount;
                 updateCartAmount();
 
+                // If quantity below 1
                 if (this.quantityValue < 1) {
+
                     cart.splice(this.index, 1);
                     localStorage.setItem('cart', JSON.stringify(cart));
                     cartContainer.removeChild(this.cartDiv);
-                }
 
-                // Update cart quantity and save in localStorage
-                cart[this.index].quantity = this.quantityValue;
-                localStorage.setItem('cart', JSON.stringify(cart));
+                    // Save in localStorage
+                    localStorage.setItem('cart', JSON.stringify(cart));
+
+                } else {
+
+                    // Update cart item quantity Save in localStorage
+                    cart[this.index].quantity = this.quantityValue;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                }
 
                 // Update HTML
                 this.quantity.innerText = `Quantity ${this.quantityValue}`;
