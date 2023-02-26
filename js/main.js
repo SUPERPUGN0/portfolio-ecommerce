@@ -1,13 +1,27 @@
-// HTML products container
+// HTML elements and variables
 const productsContainer = document.getElementById('products');
 const cartContainer = document.getElementById('cart');
+const amountElement = document.getElementById('amount');
+let cartAmount = 0;
 
 // Load localStorage cart
 let cart = JSON.parse(localStorage.getItem('cart'));
 
-// *********************** //
-// CLASSES                 //
-// *********************** //
+// If cart not empty load cart amount
+if (cart !== null) {
+    cartAmount = localStorage.getItem('cart-amount');
+}
+
+// Load HTML cart amount
+amountElement.innerText = cartAmount;
+
+// Update cart amount
+const updateCartAmount = () => {
+    amountElement.innerText = `€ ${cartAmount}`;
+    localStorage.setItem('cart-amount', amountElement);
+}
+
+
 
 // Create product item and cart item
 class Product {
@@ -40,8 +54,9 @@ class Product {
         this.productDiv.appendChild(this.name);
 
         // Price
+        this.priceAmount = product.price;
         this.price = document.createElement('p');
-        this.price.innerText = product.price;
+        this.price.innerText = this.priceAmount;
         this.price.classList.add('product-price');
         this.productDiv.appendChild(this.price);
 
@@ -83,6 +98,10 @@ class Product {
                     cart.push({ id: this.id, quantity: this.quantityValue });
                     localStorage.setItem('cart', JSON.stringify(cart));
 
+                    // Update cart amount
+                    cartAmount += this.priceAmount;
+                    updateCartAmount();
+
                     // Create cart item
                     this.newCartItem();
 
@@ -95,6 +114,10 @@ class Product {
                     cart[this.index].quantity = this.quantityValue;
                     localStorage.setItem('cart', JSON.stringify(cart));
 
+                    // Update cart amount
+                    cartAmount += this.priceAmount;
+                    updateCartAmount();
+
                     // Update HTML
                     this.quantity.innerText = `Quantity ${this.quantityValue}`;
 
@@ -103,6 +126,10 @@ class Product {
                     this.quantityValue++;
                     cart.push({ id: this.id, quantity: this.quantityValue });
                     localStorage.setItem('cart', JSON.stringify(cart));
+
+                    // Update cart amount
+                    cartAmount += this.priceAmount;
+                    updateCartAmount();
 
                     // Create cart item
                     this.newCartItem();
@@ -118,6 +145,10 @@ class Product {
                 cart[this.index].quantity = this.quantityValue;
                 localStorage.setItem('cart', JSON.stringify(cart));
 
+                // Update cart amount
+                cartAmount += this.priceAmount;
+                updateCartAmount();
+
                 // Update HTML
                 this.quantity.innerText = `Quantity ${this.quantityValue}`;
                 break;
@@ -125,6 +156,10 @@ class Product {
             case 'decreaseBtn':
 
                 this.quantityValue--;
+
+                // Update cart amount
+                cartAmount -= this.priceAmount;
+                updateCartAmount();
 
                 if (this.quantityValue < 1) {
                     cart.splice(this.index, 1);
