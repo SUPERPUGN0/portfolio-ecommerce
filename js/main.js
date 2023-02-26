@@ -9,16 +9,20 @@ let cart = JSON.parse(localStorage.getItem('cart'));
 
 // If cart not empty load cart amount
 if (cart !== null) {
-    cartAmount = localStorage.getItem('cart-amount');
-}
+
+    // Convert local Storage cart amount to number type
+    cartAmount = parseInt(localStorage.getItem('cart-amount'));
+
+};
 
 // Load HTML cart amount
 amountElement.innerText = cartAmount;
 
 // Update cart amount
 const updateCartAmount = () => {
+
     amountElement.innerText = `€ ${cartAmount}`;
-    localStorage.setItem('cart-amount', amountElement);
+    localStorage.setItem('cart-amount', cartAmount);
 }
 
 
@@ -77,6 +81,7 @@ class Product {
 
         switch (button) {
 
+            // First page loading. If cart not empty, load item and quantity
             case 'start':
 
                 if (cart && this.index > -1) {
@@ -89,6 +94,7 @@ class Product {
                 };
                 break;
 
+            // Pressing addToCart button, if cart empty, add item to the cart
             case 'addToCartBtn':
 
                 if (cart === null) {
@@ -108,6 +114,7 @@ class Product {
                     // Update HTML
                     this.quantity.innerText = `Quantity ${this.quantityValue}`;
 
+                    // Pressing addToCart button, if item exist in cart, display it
                 } else if (this.index > -1) {
 
                     this.quantityValue++;
@@ -121,6 +128,7 @@ class Product {
                     // Update HTML
                     this.quantity.innerText = `Quantity ${this.quantityValue}`;
 
+                    // Pressing addToCart button, if cart not empty and item doeasn't exist, add item to the cart
                 } else {
 
                     this.quantityValue++;
@@ -139,6 +147,7 @@ class Product {
                 }
                 break;
 
+            // Pressing increase button, increase quantity
             case 'increaseBtn':
 
                 this.quantityValue++;
@@ -153,6 +162,7 @@ class Product {
                 this.quantity.innerText = `Quantity ${this.quantityValue}`;
                 break;
 
+            // Pressing decrease button, decrease quantity
             case 'decreaseBtn':
 
                 this.quantityValue--;
@@ -167,6 +177,7 @@ class Product {
                     cartContainer.removeChild(this.cartDiv);
                 }
 
+                // Update cart quantity and save in localStorage
                 cart[this.index].quantity = this.quantityValue;
                 localStorage.setItem('cart', JSON.stringify(cart));
 
@@ -179,6 +190,7 @@ class Product {
         }
     };
 
+    // Display cart item
     newCartItem() {
 
         // Create Cart item container
@@ -236,6 +248,7 @@ class Product {
         });
     };
 
+    // Display product
     init() {
 
         // Add elements to DOM
