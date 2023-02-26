@@ -5,17 +5,11 @@ const cartContainer = document.getElementById('cart');
 // Load localStorage cart
 let cart = JSON.parse(localStorage.getItem('cart'));
 
-if (!cart) {
-
-    // If cart not empty, define cart
-    cart = [];
-};
-
 // *********************** //
 // CLASSES                 //
 // *********************** //
 
-// Create and display Cart item
+// Create product item and cart item
 class Product {
 
     constructor(product) {
@@ -23,15 +17,11 @@ class Product {
         // Assign product ID
         this.id = product.id;
 
+        // Cart index
+        this.index = undefined;
+
         // Cart Quantity
         this.quantityValue = 0;
-
-        /*
-        // Load quantity from localStorage
-        loadQuantity () {
-            const index = cart.findIndex(search => search.id === this.id);
-            this.quantityValue = cart[index].quantity;
-        };*/
 
         // Product item container
         this.productDiv = document.createElement('div');
@@ -60,6 +50,98 @@ class Product {
         this.addToCartBtn.innerText = 'Add to cart';
         this.addToCartBtnClass = this.addToCartBtn.classList.add('addToCart-btn');
         this.productDiv.appendChild(this.addToCartBtn);
+    };
+
+    // Cart Manager
+    cartManager(button) {
+
+        // If product in the cart, save index
+        if (cart !== null) {
+            this.index = cart.findIndex(search => search.id === this.id);
+        };
+
+        switch (button) {
+
+            case 'start':
+
+                if (cart && this.index > -1) {
+
+                    // Load quantityValue
+                    this.quantityValue = cart[this.index].quantity;
+
+                    // Create cart item
+                    this.newCartItem();
+                };
+                break;
+
+            case 'addToCartBtn':
+
+                if (cart === null) {
+
+                    cart = [];
+                    this.quantityValue++;
+                    cart.push({ id: this.id, quantity: this.quantityValue });
+                    localStorage.setItem('cart', JSON.stringify(cart));
+
+                    // Create cart item
+                    this.newCartItem();
+
+                    // Update HTML
+                    this.quantity.innerText = `Quantity ${this.quantityValue}`;
+
+                } else if (this.index > -1) {
+
+                    this.quantityValue++;
+                    cart[this.index].quantity = this.quantityValue;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+
+                    // Update HTML
+                    this.quantity.innerText = `Quantity ${this.quantityValue}`;
+
+                } else {
+
+                    this.quantityValue++;
+                    cart.push({ id: this.id, quantity: this.quantityValue });
+                    localStorage.setItem('cart', JSON.stringify(cart));
+
+                    // Create cart item
+                    this.newCartItem();
+
+                    // Update HTML
+                    this.quantity.innerText = `Quantity ${this.quantityValue}`;
+                }
+                break;
+
+            case 'increaseBtn':
+
+                this.quantityValue++;
+                cart[this.index].quantity = this.quantityValue;
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // Update HTML
+                this.quantity.innerText = `Quantity ${this.quantityValue}`;
+                break;
+
+            case 'decreaseBtn':
+
+                this.quantityValue--;
+
+                if (this.quantityValue < 1) {
+                    cart.splice(this.index, 1);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    cartContainer.removeChild(this.cartDiv);
+                }
+
+                cart[this.index].quantity = this.quantityValue;
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // Update HTML
+                this.quantity.innerText = `Quantity ${this.quantityValue}`;
+                break;
+
+            default:
+                console.log('Cart Manager check ended')
+        }
     };
 
     newCartItem() {
@@ -109,43 +191,14 @@ class Product {
         // Add "increase quantity button" Listener
         this.increaseBtn.addEventListener('click', () => {
 
-            // Increase quantity and update localStorage
-
-            this.quantityValue++;
-            const index = cart.findIndex(search => search.id === this.id);
-            this.quantityValue = cart[index].quantity;
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // Update HTML
-            this.quantity.innerText = `Quantity ${this.quantityValue}`;
+            this.cartManager('increaseBtn');
         })
 
         // Add "decrease quantity button" Listener
         this.decreaseBtn.addEventListener('click', () => {
 
-            // Decrease quantity and update localeStorage
-            if (this.quantityValue > 0) {
-
-                this.quantityValue--;
-                const index = cart.findIndex(search => search.id === this.id);
-                this.quantityValue = cart[index].quantity;
-                localStorage.setItem('cart', JSON.stringify(cart));
-
-                // Update HTML
-                this.quantity.innerText = `Quantity ${this.quantityValue}`;
-            };
-
+            this.cartManager('decreaseBtn');
         });
-    };
-
-    checkCart() {
-        if (cart.some(prod => prod.id === this.id)) {
-
-            // Recover cart item and quantity from localStorage 
-            const index = cart.findIndex(search => search.id === this.id);
-            this.quantityValue = cart[index].quantity;
-            this.newCartItem();
-        };
     };
 
     init() {
@@ -156,21 +209,7 @@ class Product {
         // Add To Cart Listener
         this.addToCartBtn.addEventListener('click', () => {
 
-            // Add item to the cart or increase quantity
-            if (cart.some(prod => prod.id === this.id)) {
-
-                this.quantityValue++;
-                const index = cart.findIndex(search => search.id === this.id);
-                this.quantityValue = cart[index].quantity;
-                localStorage.setItem('cart', JSON.stringify(cart));
-
-            } else {
-
-                this.quantityValue++;
-                cart.push({ id: this.id, quantity: this.quantityValue });
-                this.newCartItem();
-                localStorage.setItem('cart', JSON.stringify(cart));
-            };
+            this.cartManager('addToCartBtn');
         })
     };
 };
@@ -200,8 +239,8 @@ fetch('/js/products.json')
         products.forEach(product => {
 
             const productItem = new Product(product);
-            productItem.checkCart();
             productItem.init();
+            productItem.cartManager('start');
         });
     })
     .catch(error => { console.error('Error during json import:', error); });
