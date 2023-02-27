@@ -86,6 +86,7 @@ pag2.addEventListener('click', () => {
     }
 })
 
+/////// PRODUCTS /////////
 
 // Create product item and cart item
 class Product {
@@ -358,5 +359,61 @@ fetch('/js/products.json')
             productItem.init();
             productItem.cartManager('start');
         });
+
+        /////// SEARCHBAR /////////
+
+        const searchbar = document.getElementById('searchbar');
+        const searchbarSubmit = document.getElementById('searchbar-submit');
+        const deleteSearchBtn = document.getElementById('delete-search-btn');
+        let selectProducts = document.querySelectorAll('.product-container');
+
+        let searchTerm;
+        let matchedProducts = [];
+
+        searchbarSubmit.addEventListener('click', () => {
+
+            // Save searched term
+            searchTerm = searchbar.value;
+
+            // Hide deafult products
+            selectProducts.forEach(product => {
+
+                product.style.display = 'none';
+            });
+
+            // Find for products that match the searched term
+            matchedProducts.push(products.find(item => item.name === searchTerm));
+
+            // Display found products
+            if (matchedProducts.length > 0) {
+
+                // Generate and display product div
+                matchedProducts.forEach(product => {
+
+                    const foundItem = new Product(product);
+                    foundItem.init();
+                });
+            }
+        })
+
+        // Remove searched item and display default products
+        deleteSearchBtn.addEventListener('click', () => {
+
+            // Hide found products
+            findedProducts = document.querySelectorAll('.product-container:not([style*="display: none"])');
+
+            findedProducts.forEach(product => {
+                product.style.display = 'none';
+            })
+
+            // Display deafult products
+            selectProducts.forEach(product => {
+
+                product.style.display = 'block';
+            });
+
+            // Reset found products array
+            matchedProducts = [];
+        })
     })
     .catch(error => { console.error('Error during json import:', error); });
