@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .product-image {
     width: 150px;
 }
@@ -9,6 +15,7 @@
 html {
     background-color: black;
     color: white;
+
 }
 
 #products {
@@ -24,4 +31,34 @@ html {
     position: absolute;
     left: 100vw;
     top: 0vw;
+}
+
+.prod {
+    width: 30%;
+    height: 50%;
+    background-color: rgb(255, 131, 131);
+
+}
+
+
+
+#products {
+    width: 200vw;
+    height: 500px;
+    margin-left: 0vw;
+    flex-wrap: wrap;
+    display: flex;
+}
+
+/* #div1
+ {
+    width: 100vw;
+    height: 100%;
+    flex-wrap: wrap;
+} */
+
+.product-container {
+    width: 33.33vw;
+    height: 50%;
+    border: 2px solid green;
 }

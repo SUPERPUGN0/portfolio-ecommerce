@@ -6,7 +6,6 @@ const cartContainer = document.getElementById('cart');
 const amountElement = document.getElementById('amount');
 let cartAmount = 0;
 
-
 // Load localStorage cart
 let cart = JSON.parse(localStorage.getItem('cart'));
 
@@ -15,7 +14,6 @@ if (cart !== null) {
 
     // Convert local Storage cart amount to number type
     cartAmount = parseInt(localStorage.getItem('cart-amount'));
-
 };
 
 // Load HTML cart amount
@@ -50,7 +48,6 @@ const cartView = document.getElementById('see-cart');
 let actualCartView = 'close';
 
 // View/hide cart
-
 cartView.addEventListener('click', () => {
     if (actualCartView === 'close') {
         cartContainer.style.left = '60vw';
@@ -60,6 +57,35 @@ cartView.addEventListener('click', () => {
         actualCartView = 'close';
     }
 })
+
+/////// PAGINATION /////////
+
+const test = document.getElementById('test')
+const previous = document.getElementById('pag1');
+const next = document.getElementById('pag2');
+
+let actualPage = 1;
+let leftMargin = 0;
+
+previous.addEventListener('click', () => {
+
+    if (actualPage > 1) {
+        actualPage--;
+        leftMargin += 100;
+        productsContainer.style.marginLeft = `${leftMargin}vw`
+    }
+
+})
+
+pag2.addEventListener('click', () => {
+
+    if (actualPage < 4) {
+        actualPage++;
+        leftMargin -= 100;
+        productsContainer.style.marginLeft = `${leftMargin}vw`
+    }
+})
+
 
 // Create product item and cart item
 class Product {
@@ -86,8 +112,9 @@ class Product {
         this.productDiv.appendChild(this.image);
 
         // Name
+        this.productName = product.name
         this.name = document.createElement('p');
-        this.name.innerText = product.name;
+        this.name.innerText = this.productName;
         this.name.classList.add('product-name');
         this.productDiv.appendChild(this.name);
 
@@ -135,7 +162,7 @@ class Product {
 
                     cart = [];
                     this.quantityValue++;
-                    cart.push({ id: this.id, quantity: this.quantityValue });
+                    cart.push({ id: this.id, quantity: this.quantityValue, name: this.productName, price: this.priceAmount });
                     localStorage.setItem('cart', JSON.stringify(cart));
 
                     // Update cart amount
@@ -166,7 +193,7 @@ class Product {
                 } else {
 
                     this.quantityValue++;
-                    cart.push({ id: this.id, quantity: this.quantityValue });
+                    cart.push({ id: this.id, quantity: this.quantityValue, name: this.productName, price: this.priceAmount });
                     localStorage.setItem('cart', JSON.stringify(cart));
 
                     // Update cart amount
@@ -333,7 +360,3 @@ fetch('/js/products.json')
         });
     })
     .catch(error => { console.error('Error during json import:', error); });
-
-
-
-

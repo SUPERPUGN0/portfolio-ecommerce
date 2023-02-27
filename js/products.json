@@ -12,5 +12,75 @@
         "price": 15,
         "image": "../resources/images/pasta.jpeg",
         "cartQuantity": 0
+    },
+    {
+        "id": 3,
+        "name": "hamburger",
+        "price": 9.50,
+        "image": "../resources/images/hamburger.jpg",
+        "cartQuantity": 0
+    },
+    {
+        "id": 4,
+        "name": "chicken",
+        "price": 12,
+        "image": "../resources/images/chicken.png",
+        "cartQuantity": 0
+    },
+    {
+        "id": 5,
+        "name": "poke",
+        "price": 9.30,
+        "image": "../resources/images/poke.jpg",
+        "cartQuantity": 0
+    },
+    {
+        "id": 6,
+        "name": "kebab",
+        "price": 11.50,
+        "image": "../resources/images/kebab.jpg",
+        "cartQuantity": 0
+    },
+    {
+        "id": 7,
+        "name": "cbo",
+        "price": 7,
+        "image": "../resources/images/cbo.png",
+        "cartQuantity": 0
+    },
+    {
+        "id": 8,
+        "name": "lasagna",
+        "price": 15,
+        "image": "../resources/images/lasagna.png",
+        "cartQuantity": 0
+    },
+    {
+        "id": 9,
+        "name": "sushi",
+        "price": 24.90,
+        "image": "../resources/images/sushi.jpg",
+        "cartQuantity": 0
+    },
+    {
+        "id": 10,
+        "name": "Chicken Curry",
+        "price": 18,
+        "image": "../resources/images/chicken-curry.jpg",
+        "cartQuantity": 0
+    },
+    {
+        "id": 11,
+        "name": "fiorentina",
+        "price": 33.75,
+        "image": "../resources/images/fiorentina.jpg",
+        "cartQuantity": 0
+    },
+    {
+        "id": 12,
+        "name": "frisa salentina",
+        "price": 6,
+        "image": "../resources/images/frisa.jpg",
+        "cartQuantity": 0
     }
 ]
