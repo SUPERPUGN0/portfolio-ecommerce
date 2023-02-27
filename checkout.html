@@ -5,13 +5,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./resources/css/index.css">
+    <link rel="stylesheet" href="./resources/css/checkout.css">
     <title>Checkout</title>
 </head>
 
 <body>
     <h1>Checkout</h1>
-    <p id="checkout-products"></p>
+    <p>Totale <span id="amount"></span></p>
+    <div id="cart"></div>
+
+
+
+
+    <form action="">
+        <input type="text" name="firstName" id="firstName" placeholder="Your first name">
+        <input type="text" name="lastName" id="lastName" placeholder="Your last name">
+        <input type="text" name="cardNumber" id="cardNumber" placeholder="Your card number">
+    </form>
 
     <script src="./js/checkout.js"></script>
 </body>

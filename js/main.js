@@ -163,7 +163,7 @@ class Product {
 
                     cart = [];
                     this.quantityValue++;
-                    cart.push({ id: this.id, quantity: this.quantityValue, name: this.productName, price: this.priceAmount });
+                    cart.push({ id: this.id, quantity: this.quantityValue, name: this.productName, price: this.priceAmount, image: this.image.src });
                     localStorage.setItem('cart', JSON.stringify(cart));
 
                     // Update cart amount
@@ -194,7 +194,7 @@ class Product {
                 } else {
 
                     this.quantityValue++;
-                    cart.push({ id: this.id, quantity: this.quantityValue, name: this.productName, price: this.priceAmount });
+                    cart.push({ id: this.id, quantity: this.quantityValue, name: this.productName, price: this.priceAmount, image: this.image.src });
                     localStorage.setItem('cart', JSON.stringify(cart));
 
                     // Update cart amount
@@ -367,10 +367,12 @@ fetch('/js/products.json')
         const deleteSearchBtn = document.getElementById('delete-search-btn');
         let selectProducts = document.querySelectorAll('.product-container');
 
-        let searchTerm;
-        let matchedProducts = [];
+
 
         searchbarSubmit.addEventListener('click', () => {
+
+            let searchTerm;
+            let matchedProducts = [];
 
             // Save searched term
             searchTerm = searchbar.value;

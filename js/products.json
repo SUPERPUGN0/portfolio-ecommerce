@@ -82,5 +82,12 @@
         "price": 6,
         "image": "../resources/images/frisa.jpg",
         "cartQuantity": 0
+    },
+    {
+        "id": 13,
+        "name": "pizza salame",
+        "price": 6,
+        "image": "../resources/images/pizza-salame.jpg",
+        "cartQuantity": 0
     }
 ]

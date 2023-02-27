@@ -52,7 +52,7 @@ body {
 }
 
 #products {
-    width: 200vw;
+    width: 300vw;
     height: 500px;
     margin-left: 0vw;
     flex-wrap: wrap;
