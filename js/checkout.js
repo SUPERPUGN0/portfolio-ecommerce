@@ -13,6 +13,7 @@ let cartAmount = 0;
 const updateCartAmount = () => {
 
     amountElement.innerText = `€ ${cartAmount}`;
+    localStorage.setItem('cart-amount', cartAmount);
 }
 
 // Cart product constructor

@@ -1,3 +1,5 @@
+// INSERIRE INDICE
+
 // DOM products container
 const productsContainer = document.getElementById('products');
 
@@ -26,22 +28,6 @@ const updateCartAmount = () => {
     localStorage.setItem('cart-amount', cartAmount);
 }
 
-/////// PRODUCTS VIEW BUTTON /////////
-
-const changeView = document.getElementById('change-view');
-let actualView = 'card';
-
-// Change view button
-changeView.addEventListener('click', () => {
-    if (actualView === 'card') {
-        productsContainer.style.flexDirection = 'column';
-        actualView = 'list';
-    } else {
-        productsContainer.style.flexDirection = 'row';
-        actualView = 'card';
-    }
-})
-
 /////// VIEW/HIDE CART /////////
 
 const cartView = document.getElementById('see-cart');
@@ -49,10 +35,14 @@ let actualCartView = 'close';
 
 // View/hide cart
 cartView.addEventListener('click', () => {
+
     if (actualCartView === 'close') {
-        cartContainer.style.left = '60vw';
+
+        cartContainer.style.left = '80vw';
         actualCartView = 'open';
+
     } else {
+
         cartContainer.style.left = '100vw';
         actualCartView = 'close';
     }
@@ -60,7 +50,6 @@ cartView.addEventListener('click', () => {
 
 /////// PAGINATION /////////
 
-const test = document.getElementById('test')
 const previous = document.getElementById('pag1');
 const next = document.getElementById('pag2');
 
@@ -369,8 +358,7 @@ fetch('/js/products.json')
 
 
 
-        searchbarSubmit.addEventListener('click', () => {
-
+        const search = () => {
             let searchTerm;
             let matchedProducts = [];
 
@@ -396,6 +384,19 @@ fetch('/js/products.json')
                     foundItem.init();
                 });
             }
+        }
+
+        searchbarSubmit.addEventListener('click', () => {
+
+            search();
+        })
+
+        searchbar.addEventListener('keydown', (event) => {
+
+            if (event.code === 'Enter') {
+                search();
+            };
+
         })
 
         // Remove searched item and display default products
@@ -417,5 +418,46 @@ fetch('/js/products.json')
             // Reset found products array
             matchedProducts = [];
         })
+
+        /////// PRODUCTS VIEW BUTTON /////////
+
+        const productDivs = document.querySelectorAll('.product-container');
+        const changeView = document.getElementById('change-view');
+        let actualView = 'card';
+
+        // Change view button
+        changeView.addEventListener('click', () => {
+
+            if (actualView === 'card') {
+
+                productsContainer.style.gridTemplateRows = '1fr 1fr 1fr 1fr 1fr 1fr';
+                productsContainer.style.gridTemplateColumns = '1fr 1fr';
+
+                productDivs.forEach(product => {
+
+                    product.style.flexDirection = 'row';
+                    product.style.height = '100px';
+                    product.style.justifyContent = 'space-evenly';
+
+                })
+
+                actualView = 'list';
+
+            } else {
+
+                productsContainer.style.gridTemplateRows = '1fr 1fr ';
+                productsContainer.style.gridTemplateColumns = '1fr 1fr 1fr 1fr 1fr 1fr';
+
+                productDivs.forEach(product => {
+
+                    product.style.flexDirection = 'column';
+                    product.style.height = '50%';
+                    product.style.justifyContent = 'space-evenly';
+                })
+
+                actualView = 'card';
+            }
+        })
     })
     .catch(error => { console.error('Error during json import:', error); });
+

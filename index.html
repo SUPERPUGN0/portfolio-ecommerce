@@ -5,32 +5,98 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Hind+Siliguri&family=Puritan:wght@700&family=Source+Code+Pro:wght@900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="./resources/css/index.css">
+    <script src="https://kit.fontawesome.com/1e4bb63857.js" crossorigin="anonymous"></script>
     <title>Cart Project</title>
 </head>
 
 <body>
 
     <header>
-        <p><a href="./checkout.html">Checkout</a></p>
-        <button id="see-cart">Cart</button>
+        <!-- MENU-->
+        <nav>
+            <ul>
+                <li><a href="">Home</a></li>
+                <li><a href="">Tech Stuff</a></li>
+                <li><a href="./checkout.html">Checkout</a></li>
+                <li><button id="see-cart" class="cart-button"><i class="fa-solid fa-cart-shopping"></i> Wonderful
+                        Cart</button></li>
+            </ul>
+        </nav>
     </header>
-    <h1>Cart Project</h1>
-    <section id="search-section">
-        <input type="text" name="searchbar" id="searchbar" placeholder="type here...">
-        <input type="submit" id="searchbar-submit">
-        <button id="delete-search-btn">Annulla ricerca</button>
-    </section>
-    <button id="change-view">Change view</button>
-    <section id="products"></section>
-    <section id="cart">
-        <h2>Cart</h2>
-        <p id="cart-amount">Totale <span id="amount"></span></p>
-    </section>
 
-    <button class="pagination" id="pag1">Previous</button>
-    <button class="pagination" id="pag2">Next</button>
+    <main>
 
+        <!-- SEARCHBAR SECTION-->
+        <section id="search-section">
+            <h1>Vanilla JS Cart System</h1>
+
+            <!-- SEARCHBAR-->
+            <div id="search-container">
+                <input type="text" name="searchbar" id="searchbar" placeholder="type here...">
+                <!--<input type="submit" id="searchbar-submit">-->
+                <button type="submit" id="searchbar-submit"><i
+                        class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+                <button id="delete-search-btn">Annulla ricerca</button>
+            </div>
+        </section>
+
+        <!-- PRODUCTS SECTION -->
+        <div id="view-div">
+            <button id="change-view">Change view</button>
+        </div>
+        <section id="products"></section>
+        <section id="cart">
+            <h2>Cart</h2>
+            <p id="cart-amount">Totale <span id="amount"></span></p>
+        </section>
+        <div id="pagination-section">
+            <button class="pagination" id="pag1">Previous</button>
+            <button class="pagination" id="pag2">Next</button>
+        </div>
+
+        <!-- TECH STUFF SECTION-->
+        <section id="tech-stuff">
+            <h2>Tech Stuff</h2>
+            <p>If you're bored by this stuff, maybe coding isn't your jam!</p>
+        </section>
+
+
+    </main>
+
+    <footer>
+        <div class="footer-column-1">
+            <h3>Colors</h3>
+            <ul>
+                <li>#6E6691</li>
+                <li>#DED2C8</li>
+                <li>#BAB1DE</li>
+                <li>#9BDE9D</li>
+                <li>#6D916E</li>
+            </ul>
+        </div>
+        <div class="footer-column-2">
+            <h3>Fonts</h3>
+            <ul>
+                <li>Source Code Pro 900</li>
+                <li>Puritan 700</li>
+                <li>Hind Siliguri 400</li>
+            </ul>
+        </div>
+        <div class="footer-column-3">
+            <h3>About Me</h3>
+            <ul>
+                <li><a>LinkedIn</a></li>
+                <li><a>Download Resume</a></li>
+                <li><a>GitHub</a></li>
+            </ul>
+        </div>
+    </footer>
 
     <script src="./js/main.js"></script>
 </body>
