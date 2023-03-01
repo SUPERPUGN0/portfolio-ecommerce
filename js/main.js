@@ -1,7 +1,9 @@
 // INSERIRE INDICE
 
+let actualView = 'card';
+
 // DOM products container
-const productsContainer = document.getElementById('products');
+let productsContainer = document.getElementById('products');
 
 // DOM cart container and quantity amount
 const cartContainer = document.getElementById('cart');
@@ -68,7 +70,7 @@ previous.addEventListener('click', () => {
 
 pag2.addEventListener('click', () => {
 
-    if (actualPage < 4) {
+    if (actualPage < 2) {
         actualPage++;
         leftMargin -= 100;
         productsContainer.style.marginLeft = `${leftMargin}vw`
@@ -312,6 +314,15 @@ class Product {
         // Add elements to DOM
         productsContainer.appendChild(this.productDiv);
 
+        if (actualView === 'list') {
+
+            this.productDiv.style.flexDirection = 'row';
+
+        } else {
+
+            this.productDiv.style.flexDirection = 'column';
+        };
+
         // Add To Cart Listener
         this.addToCartBtn.addEventListener('click', () => {
 
@@ -372,13 +383,8 @@ fetch('/js/products.json')
             // Save matched product
             let matchedProducts = [];
 
-            products.forEach(product => {
-                if (product.name === searchTerm) {
-
-                    // Find for products that match the searched term
-                    matchedProducts.push(products.find(item => item.name === searchTerm));
-                }
-            })
+            // Find for products that match the searched term
+            matchedProducts = products.filter(product => product.name.includes(searchTerm));
 
             // Display found products
             if (matchedProducts.length > 0) {
@@ -392,18 +398,27 @@ fetch('/js/products.json')
 
             } else {
 
+                // Erease input text
+                searchbar.value = '';
+
+                window.alert('No products found');
+
                 products.forEach(product => {
                     const defaultProduct = new Product(product);
                     defaultProduct.init();
                 })
             }
+
+
         }
 
+        // Function implemented but not required
         searchbarSubmit.addEventListener('click', () => {
 
             search();
-        })
+        });
 
+        // Function implemented but not required
         searchbar.addEventListener('keydown', (event) => {
 
             if (event.code === 'Enter') {
@@ -412,6 +427,11 @@ fetch('/js/products.json')
             };
 
         })
+
+        searchbar.addEventListener('input', () => {
+
+            search();
+        });
 
         // Remove searched item and display default products
         deleteSearchBtn.addEventListener('click', () => {
@@ -428,16 +448,21 @@ fetch('/js/products.json')
                 const defaultProduct = new Product(product);
                 defaultProduct.init();
             })
+
+            // Erease input text
+            searchbar.value = '';
         })
 
         /////// PRODUCTS VIEW BUTTON /////////
 
-        const productDivs = document.querySelectorAll('.product-container');
+        let productDivs = document.querySelectorAll('.product-container');
         const changeView = document.getElementById('change-view');
-        let actualView = 'card';
 
         // Change view button
         changeView.addEventListener('click', () => {
+
+            // Load products div
+            productDivs = document.querySelectorAll('.product-container');
 
             if (actualView === 'card') {
 
@@ -449,7 +474,6 @@ fetch('/js/products.json')
                     product.style.flexDirection = 'row';
                     product.style.height = '100px';
                     product.style.justifyContent = 'space-evenly';
-
                 })
 
                 actualView = 'list';

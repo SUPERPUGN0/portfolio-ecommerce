@@ -21,8 +21,8 @@
         <!-- MENU-->
         <nav>
             <ul>
-                <li><a href="">Home</a></li>
-                <li><a href="">Tech Stuff</a></li>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./index.html#tech-stuff">Tech Stuff</a></li>
                 <li><a href="./checkout.html">Checkout</a></li>
                 <li><button id="see-cart" class="cart-button"><i class="fa-solid fa-cart-shopping"></i> Wonderful
                         Cart</button></li>
@@ -34,15 +34,14 @@
 
         <!-- SEARCHBAR SECTION-->
         <section id="search-section">
-            <h1>Vanilla JS Cart System</h1>
+            <h1>Vanilla JS Search and Cart System</h1>
 
             <!-- SEARCHBAR-->
             <div id="search-container">
                 <input type="text" name="searchbar" id="searchbar" placeholder="type here...">
-                <!--<input type="submit" id="searchbar-submit">-->
-                <button type="submit" id="searchbar-submit"><i
+                <button title="search" type="submit" id="searchbar-submit"><i
                         class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
-                <button id="delete-search-btn">Annulla ricerca</button>
+                <button title="delete" id="delete-search-btn"><i class="fa-solid fa-x"></i></button>
             </div>
         </section>
 
@@ -64,13 +63,39 @@
         <section id="tech-stuff">
             <h2>Tech Stuff</h2>
             <p>If you're bored by this stuff, maybe coding isn't your jam!</p>
+
+            <ul>
+                <li>
+
+                    <h3>Displayed products</h3>
+                    <p>Products loaded via JSON and are displayed automatically</p>
+                </li>
+                <li>
+                    <h3>View</h3>
+                    <p>View products in card or list format, even from mobile!</p>
+                </li>
+                <li>
+                    <h3>Pagination</h3>
+                    <p>View 6 products at a time. Currently limited to 12 products but easily unlockable via code.</p>
+                </li>
+                <li>
+                    <h3>Searchbar</h3>
+                    <p>Search among the available products by typing the product name or... even just a part :-)</p>
+                </li>
+                <li>
+                    <h3>Cart</h3>
+                    <p>Add products to your shopping cart and don't be afraid to close the browser: local storage is
+                        active, even on the checkout page!</p>
+                </li>
+            </ul>
         </section>
 
 
     </main>
 
+    <!-- FOOTER -->
     <footer>
-        <div class="footer-column-1">
+        <div>
             <h3>Colors</h3>
             <ul>
                 <li>#6E6691</li>
@@ -80,7 +105,7 @@
                 <li>#6D916E</li>
             </ul>
         </div>
-        <div class="footer-column-2">
+        <div>
             <h3>Fonts</h3>
             <ul>
                 <li>Source Code Pro 900</li>
@@ -88,12 +113,16 @@
                 <li>Hind Siliguri 400</li>
             </ul>
         </div>
-        <div class="footer-column-3">
+        <div>
             <h3>About Me</h3>
             <ul>
-                <li><a>LinkedIn</a></li>
-                <li><a>Download Resume</a></li>
-                <li><a>GitHub</a></li>
+                <li><button><a href="https://www.linkedin.com/in/mattia-ruberto-66b836261/" target="_blank"><i
+                                class="fa-brands fa-linkedin"></i> LinkedIn</a></button></li>
+                <li><button><a href="./resources/documents/mattia-ruberto-cv.pdf" download><i
+                                class="fa-solid fa-file-arrow-down"></i> Download Resume</a></button>
+                </li>
+                <li><button><a href="https://github.com/SUPERPUGN0" target="_blank"><i class="fa-brands fa-github"></i>
+                            GitHub</a></button></li>
             </ul>
         </div>
     </footer>
