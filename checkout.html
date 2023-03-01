@@ -10,18 +10,72 @@
 </head>
 
 <body>
-    <h1>Checkout</h1>
-    <p>Totale <span id="amount"></span></p>
-    <div id="cart"></div>
+
+    <header>
+        <!-- MENU-->
+        <nav>
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./index.html#tech-stuff">Tech Stuff</a></li>
+                <li><a href="./checkout.html">Checkout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- MAIN -->
+    <main>
+
+        <section id="main">
+            <h1>Checkout</h1>
+            <p>Totale <span id="amount"></span></p>
+            <div id="cart"></div>
 
 
 
 
-    <form action="">
-        <input type="text" name="firstName" id="firstName" placeholder="Your first name">
-        <input type="text" name="lastName" id="lastName" placeholder="Your last name">
-        <input type="text" name="cardNumber" id="cardNumber" placeholder="Your card number">
-    </form>
+
+            <form action="">
+                <input type="text" name="firstName" id="firstName" placeholder="Your first name">
+                <input type="text" name="lastName" id="lastName" placeholder="Your last name">
+                <input type="text" name="cardNumber" id="cardNumber" placeholder="Your card number">
+                <button>E io pago!</button>
+            </form>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div>
+            <h3>Colors</h3>
+            <ul>
+                <li>#6E6691</li>
+                <li>#DED2C8</li>
+                <li>#BAB1DE</li>
+                <li>#9BDE9D</li>
+                <li>#6D916E</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Fonts</h3>
+            <ul>
+                <li>Source Code Pro 900</li>
+                <li>Puritan 700</li>
+                <li>Hind Siliguri 400</li>
+            </ul>
+        </div>
+        <div>
+            <h3>About Me</h3>
+            <ul>
+                <li><button><a href="https://www.linkedin.com/in/mattia-ruberto-66b836261/" target="_blank"><i
+                                class="fa-brands fa-linkedin"></i> LinkedIn</a></button></li>
+                <li><button><a href="./resources/documents/mattia-ruberto-cv.pdf" download><i
+                                class="fa-solid fa-file-arrow-down"></i> Download Resume</a></button>
+                </li>
+                <li><button><a href="https://github.com/SUPERPUGN0" target="_blank"><i class="fa-brands fa-github"></i>
+                            GitHub</a></button></li>
+            </ul>
+        </div>
+    </footer>
 
     <script src="./js/checkout.js"></script>
 </body>

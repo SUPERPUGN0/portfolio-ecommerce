@@ -25,39 +25,43 @@ class CartItem {
         this.id = product.id;
 
         // Product container
-        this.cartDiv = document.createElement('div')
+        this.cartDiv = document.createElement('div');
+        this.cartDiv.classList.add('cart-item-container');
 
         // Name element
-        this.nameElement = document.createElement('p')
-        this.name = product.name
-        this.nameElement.innerText = this.name
-        this.cartDiv.appendChild(this.nameElement)
+        this.nameElement = document.createElement('p');
+        this.name = product.name;
+        this.nameElement.innerText = this.name;
+        this.cartDiv.appendChild(this.nameElement);
 
         // Price element
-        this.priceElement = document.createElement('p')
-        this.price = product.price
-        this.priceElement.innerText = this.price
-        this.cartDiv.appendChild(this.priceElement)
+        this.priceElement = document.createElement('p');
+        this.price = product.price;
+        this.priceElement.innerText = this.price;
+        this.cartDiv.appendChild(this.priceElement);
 
         // Quantity element
-        this.quantityElement = document.createElement('p')
-        this.quantity = product.quantity
-        this.quantityElement.innerText = this.quantity
-        this.cartDiv.appendChild(this.quantityElement)
+        this.quantityElement = document.createElement('p');
+        this.quantity = product.quantity;
+        this.quantityElement.innerText = this.quantity;
+        this.cartDiv.appendChild(this.quantityElement);
 
         // Image element
         this.imageElement = document.createElement('img');
         this.imageElement.src = product.image;
+        this.imageElement.classList.add('cart-item-image');
         this.cartDiv.appendChild(this.imageElement);
 
         // Increase quantity button
         this.increaseBtn = document.createElement('button');
-        this.increaseBtn.innerText = 'Increase quantity';
+        this.increaseBtn.innerText = '+';
+        this.increaseBtn.classList.add('increase-quantity');
         this.cartDiv.appendChild(this.increaseBtn);
 
         // Decrease quantity button
         this.decreaseBtn = document.createElement('button');
-        this.decreaseBtn.innerText = 'Decrease quantity';
+        this.decreaseBtn.innerText = '-';
+        this.decreaseBtn.classList.add('decrease-quantity');
         this.cartDiv.appendChild(this.decreaseBtn);
     }
 

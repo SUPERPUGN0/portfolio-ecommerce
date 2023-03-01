@@ -32,23 +32,46 @@ const updateCartAmount = () => {
 
 /////// VIEW/HIDE CART /////////
 
-const cartView = document.getElementById('see-cart');
+
+//const cartView = document.getElementById('see-cart');
+const cartView = document.querySelectorAll('.cart-button');
 let actualCartView = 'close';
 
-// View/hide cart
-cartView.addEventListener('click', () => {
+const mediaQuery = window.matchMedia("(max-width: 870px)");
 
-    if (actualCartView === 'close') {
+cartView.forEach(button => {
 
-        cartContainer.style.left = '80vw';
-        actualCartView = 'open';
+    // View/hide cart
+    button.addEventListener('click', () => {
 
-    } else {
+        if (mediaQuery.matches) {
 
-        cartContainer.style.left = '100vw';
-        actualCartView = 'close';
-    }
-})
+            if (actualCartView === 'close') {
+
+                cartContainer.style.left = '20vw';
+                actualCartView = 'open';
+
+            } else {
+
+                cartContainer.style.left = '100vw';
+                actualCartView = 'close';
+            }
+
+        } else {
+
+            if (actualCartView === 'close') {
+
+                cartContainer.style.left = '80vw';
+                actualCartView = 'open';
+
+            } else {
+
+                cartContainer.style.left = '100vw';
+                actualCartView = 'close';
+            }
+        }
+    })
+});
 
 /////// PAGINATION /////////
 
@@ -113,7 +136,7 @@ class Product {
         // Price
         this.priceAmount = product.price;
         this.price = document.createElement('p');
-        this.price.innerText = this.priceAmount;
+        this.price.innerText = `€ ${this.priceAmount}`;
         this.price.classList.add('product-price');
         this.productDiv.appendChild(this.price);
 
@@ -282,14 +305,14 @@ class Product {
 
         // Display Increase quantity Button
         this.increaseBtn = document.createElement('button');
-        this.increaseBtn.innerText = 'Increase quantity';
-        this.increaseBtnClass = this.increaseBtn.classList.add('increase-quantity');
+        this.increaseBtn.innerText = '+';
+        this.increaseBtn.classList.add('increase-quantity');
         this.cartDiv.appendChild(this.increaseBtn);
 
         // Display Decrease quantity Button
         this.decreaseBtn = document.createElement('button');
-        this.decreaseBtn.innerText = 'Decrease quantity';
-        this.decreaseBtnClass = this.decreaseBtn.classList.add('decrease-quantity');
+        this.decreaseBtn.innerText = '-';
+        this.decreaseBtn.classList.add('decrease-quantity');
         this.cartDiv.appendChild(this.decreaseBtn);
 
         // Add elements to DOM
@@ -495,4 +518,6 @@ fetch('/js/products.json')
         })
     })
     .catch(error => { console.error('Error during json import:', error); });
+
+
 
