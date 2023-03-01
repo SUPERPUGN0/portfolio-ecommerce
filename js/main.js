@@ -354,25 +354,31 @@ fetch('/js/products.json')
         const searchbar = document.getElementById('searchbar');
         const searchbarSubmit = document.getElementById('searchbar-submit');
         const deleteSearchBtn = document.getElementById('delete-search-btn');
-        let selectProducts = document.querySelectorAll('.product-container');
-
 
 
         const search = () => {
-            let searchTerm;
-            let matchedProducts = [];
 
-            // Save searched term
-            searchTerm = searchbar.value;
+            // Select actual displayed products
+            let selectProducts = document.querySelectorAll('.product-container');
 
-            // Hide deafult products
             selectProducts.forEach(product => {
 
-                product.style.display = 'none';
-            });
+                productsContainer.removeChild(product);
+            })
 
-            // Find for products that match the searched term
-            matchedProducts.push(products.find(item => item.name === searchTerm));
+            // Save searched term
+            let searchTerm = searchbar.value;
+
+            // Save matched product
+            let matchedProducts = [];
+
+            products.forEach(product => {
+                if (product.name === searchTerm) {
+
+                    // Find for products that match the searched term
+                    matchedProducts.push(products.find(item => item.name === searchTerm));
+                }
+            })
 
             // Display found products
             if (matchedProducts.length > 0) {
@@ -383,6 +389,13 @@ fetch('/js/products.json')
                     const foundItem = new Product(product);
                     foundItem.init();
                 });
+
+            } else {
+
+                products.forEach(product => {
+                    const defaultProduct = new Product(product);
+                    defaultProduct.init();
+                })
             }
         }
 
@@ -394,6 +407,7 @@ fetch('/js/products.json')
         searchbar.addEventListener('keydown', (event) => {
 
             if (event.code === 'Enter') {
+
                 search();
             };
 
@@ -402,21 +416,18 @@ fetch('/js/products.json')
         // Remove searched item and display default products
         deleteSearchBtn.addEventListener('click', () => {
 
-            // Hide found products
-            findedProducts = document.querySelectorAll('.product-container:not([style*="display: none"])');
+            // Select actual displayed products
+            let selectProducts = document.querySelectorAll('.product-container');
 
-            findedProducts.forEach(product => {
-                product.style.display = 'none';
-            })
-
-            // Display deafult products
             selectProducts.forEach(product => {
 
-                product.style.display = 'block';
-            });
+                productsContainer.removeChild(product);
+            })
 
-            // Reset found products array
-            matchedProducts = [];
+            products.forEach(product => {
+                const defaultProduct = new Product(product);
+                defaultProduct.init();
+            })
         })
 
         /////// PRODUCTS VIEW BUTTON /////////
