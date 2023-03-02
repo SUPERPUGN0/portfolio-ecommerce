@@ -21,10 +21,13 @@ html {
     background-color: var(--light-purple);
     color: black;
     font-size: 18px;
+    overflow-x: hidden;
+    
 }
 
 body {
     overflow-x: hidden;
+    position: relative
 }
 
 h1,
