@@ -360,7 +360,7 @@ class Product {
 // ************************* //
 
 // Import JSON products
-fetch('./products.json')
+fetch('../js/products.json')
 
     .then(response => {
 
