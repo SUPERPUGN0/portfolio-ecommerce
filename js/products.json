@@ -3,7 +3,7 @@
         "id": 1,
         "name": "pizza",
         "price": 20,
-        "image": "./../resources/images/pizza.png",
+        "image": "./resources/images/pizza.png",
         "cartQuantity": 0
     },
     {
