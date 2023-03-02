@@ -360,7 +360,7 @@ class Product {
 // ************************* //
 
 // Import JSON products
-fetch('../js/products.json')
+fetch('./portoflio-ecommerce/js/products.json')
 
     .then(response => {
 
