@@ -10,77 +10,77 @@
         "id": 2,
         "name": "pasta",
         "price": 15,
-        "image": "../resources/images/pasta.png",
+        "image": "./resources/images/pasta.png",
         "cartQuantity": 0
     },
     {
         "id": 3,
         "name": "hamburger",
         "price": 9,
-        "image": "../resources/images/hamburger.png",
+        "image": "./resources/images/hamburger.png",
         "cartQuantity": 0
     },
     {
         "id": 4,
         "name": "chicken",
         "price": 12,
-        "image": "../resources/images/chicken.png",
+        "image": "./resources/images/chicken.png",
         "cartQuantity": 0
     },
     {
         "id": 5,
         "name": "cake",
         "price": 9,
-        "image": "../resources/images/cake.png",
+        "image": "./resources/images/cake.png",
         "cartQuantity": 0
     },
     {
         "id": 6,
         "name": "chips",
         "price": 11,
-        "image": "../resources/images/chips.png",
+        "image": "./resources/images/chips.png",
         "cartQuantity": 0
     },
     {
         "id": 7,
         "name": "cookies",
         "price": 7,
-        "image": "../resources/images/cookies.png",
+        "image": "./resources/images/cookies.png",
         "cartQuantity": 0
     },
     {
         "id": 8,
         "name": "lasagna",
         "price": 15,
-        "image": "../resources/images/lasagna.png",
+        "image": "./resources/images/lasagna.png",
         "cartQuantity": 0
     },
     {
         "id": 9,
         "name": "sushi",
         "price": 24,
-        "image": "../resources/images/sushi.png",
+        "image": "./resources/images/sushi.png",
         "cartQuantity": 0
     },
     {
         "id": 10,
         "name": "sandwich",
         "price": 8,
-        "image": "../resources/images/sandwich.png",
+        "image": "./resources/images/sandwich.png",
         "cartQuantity": 0
     },
     {
         "id": 11,
         "name": "gelato",
         "price": 7,
-        "image": "../resources/images/gelato.png",
+        "image": "./resources/images/gelato.png",
         "cartQuantity": 0
     },
     {
         "id": 12,
         "name": "waffle",
         "price": 6,
-        "image": "../resources/images/waffle.png",
+        "image": "./resources/images/waffle.png",
         "cartQuantity": 0
     }
 ]
